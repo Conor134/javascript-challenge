@@ -2,18 +2,16 @@
 var tableData = data;
 var tbody = d3.select("tbody");
 
-// Getting a reference to the button on the page with the id property set to `click-me`
-var input_date = d3.select("#text");
 // YOUR CODE HERE!
 
 // // Use d3 to update each cell's text with
-// // UFO report values (weekday, date, high, low)
+// // UFO report values 
 data.forEach(function(uforeport) {
-    console.log(uforeport);
+    // console.log(uforeport);
     var row = tbody.append("tr");
 
     Object.entries(uforeport).forEach(function([key, value]) {
-    console.log(key, value);
+    // console.log(key, value);
     // Append a cell to the row for each value
     // in the weather report object
     var cell = row.append("td");
@@ -21,43 +19,34 @@ data.forEach(function(uforeport) {
     });
 });
 
-
-
-
-// Select the form
+//  Select the form
 var button = d3.select("#filter-btn");
 
-// // Create event handlers 
-button.on("click", runEnter);
+// Create event handlers 
+button.on("click", function() {
 
-// Complete the event handler function for the form
-function runEnter() {
-
-    // Remove existing table
-    d3.select("tbody").html("");
-
-    // // Prevent the page from refreshing
+       // Prevent the page from refreshing
     d3.event.preventDefault();
-    
-    // Select the input element and get the raw HTML node
+    // Clear the table
+    tbody.html("");
+
+    //     // Select the input element and get the raw HTML node
     var inputdate = d3.select("#datetime");
-  
-    // // Get the value property of the input element
-    var date = inputdate.property("value");
-
-    console.log(date);
-
-    var filteredData = tableData.filter(person => person.datetime === date);
-
+    var inputdate2 = inputdate.property("value");
+    console.log(inputdate2);
+ 
+    // Filter reports
+    var filteredData = tableData.filter(datereport => datereport.datetime === inputdate2);
     console.log(filteredData);
 
-    // // Display the filtered dataset
-    filteredData.forEach((weatherReport) => {
-    var row = tbody.append('tr');
+    // Display the filtered dataset
+    filteredData.forEach((report) => {
+        var row = tbody.append('tr');
 
-    Object.entries(weatherReport).forEach(([key, value]) => {
-        console.log(key, value);
-        var cell = row.append('td');
-        cell.text(value);
+        Object.entries(report).forEach(([key, value]) => {
+            console.log(key, value);
+            var cell = row.append('td');
+            cell.text(value);
+        });
     });
 });
